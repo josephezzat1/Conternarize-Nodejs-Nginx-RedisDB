@@ -1,0 +1,27 @@
+services:
+  ngix:
+    build: ./nginx/
+    depends_on:
+      - web1
+      - web2
+    ports:
+      - 80:80
+    depends_on:
+      - web1
+      - web2
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+  web1:
+    build: ./web1/
+    ports:
+      - "81:5000"
+    depends_on:
+      - redis
+  web2:
+    build: ./web2/
+    ports:
+      - "82:5000"
+    depends_on:
+      - redis
